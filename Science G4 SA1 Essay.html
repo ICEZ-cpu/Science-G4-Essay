@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grade 4 Science - Chapter 3-4 Auto-Score Essay Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 940px;
+      margin: auto;
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      text-align: center;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #475569;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .author-badge {
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      color: #1e3a8a;
+      background: #dbeafe;
+      display: table;
+      margin: 0 auto 20px auto;
+      padding: 5px 16px;
+      border-radius: 20px;
+    }
+    .sticky-score-bar {
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: #0f766e;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.25);
+    }
+    .score-stats {
+      font-size: 17px;
+      font-weight: bold;
+    }
+    .btn-restart {
+      padding: 8px 16px;
+      background-color: #f59e0b;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-restart:hover {
+      background-color: #d97706;
+    }
+    .student-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 22px;
+      padding: 14px;
+      background: #f1f5f9;
+      border-radius: 8px;
+    }
+    .student-bar input {
+      padding: 9px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      flex: 1;
+      min-width: 180px;
+    }
+    .question-item {
+      padding: 18px;
+      margin-bottom: 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background-color: #ffffff;
+      line-height: 2.15;
+      font-size: 16px;
+    }
+    .blank-input {
+      border: none;
+      border-bottom: 2px solid #2563eb;
+      background-color: #eff6ff;
+      padding: 2px 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e3a8a;
+      min-width: 140px;
+      border-radius: 3px 3px 0 0;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .blank-input:focus {
+      background-color: #dbeafe;
+      border-bottom-color: #1d4ed8;
+    }
+    .blank-input:disabled {
+      cursor: not-allowed;
+      opacity: 0.92;
+    }
+    .input-correct {
+      background-color: #dcfce7 !important;
+      border-bottom-color: #16a34a !important;
+      color: #14532d !important;
+    }
+    .input-wrong {
+      background-color: #fee2e2 !important;
+      border-bottom-color: #dc2626 !important;
+      color: #7f1d1d !important;
+    }
+    .btn-check-single {
+      margin-top: 10px;
+      padding: 7px 16px;
+      background-color: #2563eb;
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-check-single:hover {
+      background-color: #1d4ed8;
+    }
+    .btn-check-single:disabled {
+      background-color: #94a3b8;
+      cursor: not-allowed;
+    }
+    .answer-key {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 15px;
+      border-radius: 6px;
+      font-size: 14.5px;
+      line-height: 1.55;
+    }
+    .key-correct {
+      background-color: #ecfdf5;
+      border-left: 4px solid #10b981;
+      color: #065f46;
+    }
+    .key-correction {
+      background-color: #fee2e2;
+      border-left: 4px solid #dc2626;
+      color: #7f1d1d;
+    }
+    .bottom-restart-wrap {
+      text-align: center;
+      margin-top: 25px;
+    }
+    .btn-restart-large {
+      padding: 14px 28px;
+      background-color: #0f766e;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .btn-restart-large:hover {
+      background-color: #115e59;
+    }
+    .footer-credit {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Grade 4 Science: SA1 Summary Exercise</h1>
+    <div class="subtitle">Topic: Chapter 3–4 Review (45 Essay / Fill-in-the-Blank Questions — Auto-Score)</div>
+    <div class="author-badge">Maked by Sujato Andika Nanda</div>
+
+    <div class="sticky-score-bar">
+      <div class="score-stats" id="live-score">Score: 0 / 45 (Checked: 0 / 45)</div>
+      <button type="button" class="btn-restart" onclick="initEssayQuiz()">↻ Restart & Shuffle Quiz</button>
+    </div>
+
+    <div class="student-bar">
+      <input type="text" placeholder="Student Name..." />
+      <input type="date" />
+    </div>
+
+    <div id="essay-container"></div>
+
+    <div class="bottom-restart-wrap">
+      <button type="button" class="btn-restart-large" onclick="initEssayQuiz()">↻ Restart & Shuffle New Attempt</button>
+    </div>
+
+    <div class="footer-credit">Maked by Sujato Andika Nanda</div>
+  </div>
+
+  <script>
+    const baseEssayQuestions = [
+      {
+        text: "A solid can melt when it gains [blank].",
+        answers: ["heat"],
+        explanation: "Gaining heat energy causes a solid to melt into a liquid."
+      },
+      {
+        text: "Mention 3 properties of solids: [blank], [blank], [blank].",
+        answers: ["definite shape", "definite volume", "cannot flow"],
+        explanation: "Solids have a definite shape and definite volume, and they cannot flow."
+      },
+      {
+        text: "Complete these changes:<br>a. A piece of paper turns to [blank]. This is a permanent change.<br>b. [blank] turns into omelette. This is a [blank] change.<br>c. [blank] turns to water. This is a temporary change.",
+        answers: ["ash", "egg", "permanent", "ice"],
+        explanation: "Paper burns into ash (permanent), egg cooks into an omelette (permanent change), and ice melts into water (temporary change)."
+      },
+      {
+        text: "The melting point of pure gold is [blank].",
+        answers: ["1064°c"],
+        explanation: "Pure gold melts at 1064°C."
+      },
+      {
+        text: "What is the name of this following picture (graduated cylinder with scale)? [blank]",
+        answers: ["measuring cylinder"],
+        explanation: "A measuring cylinder is used to measure the volume of liquids."
+      },
+      {
+        text: "Statements: i. Air doesn't have mass. ii. Liquids have a definite shape. iii. Air can be compressed. iv. Liquids have no definite volume. v. Ice is not a solid. Which statement is correct? [blank]",
+        answers: ["iii"],
+        explanation: "Statement iii ('Air can be compressed') is the correct statement."
+      },
+      {
+        text: "Changes: i. Ice turns into water. ii. Chocolate bar turns into melted chocolate. iii. Water turns into ice. iv. Egg turns into omelette. Which of these changes is a permanent change? [blank]",
+        answers: ["iv"],
+        explanation: "Turning an egg into an omelette (iv) is a permanent change."
+      },
+      {
+        text: "The freezing point of ice is [blank] °C.",
+        answers: ["0"],
+        explanation: "Ice/water freezes at 0°C."
+      },
+      {
+        text: "The melting point of canola oil is [blank] °C.",
+        answers: ["-10"],
+        explanation: "Canola oil melts at around -10°C (below 0°C)."
+      },
+      {
+        text: "What is the name of the two-pan weighing picture below? [blank]",
+        answers: ["balance"],
+        explanation: "A balance is used to measure or compare mass."
+      },
+      {
+        text: "Look at the picture showing the curved liquid surface at eye level. What is 'A'? [blank]",
+        answers: ["meniscus"],
+        explanation: "'A' points to the meniscus, the curve at the surface of a liquid."
+      },
+      {
+        text: "When we blow air into a balloon, the balloon becomes bigger. This shows that air occupies [blank].",
+        answers: ["space"],
+        explanation: "Air takes up space inside the balloon, making it expand."
+      },
+      {
+        text: "Most substances [blank] when they are cooled.",
+        answers: ["contract"],
+        explanation: "Cooling causes most substances to contract (shrink slightly)."
+      },
+      {
+        text: "Freezing is the process of changing a liquid into a [blank].",
+        answers: ["solid"],
+        explanation: "Freezing changes a liquid into a solid."
+      },
+      {
+        text: "Avocado juice is a [blank] liquid.",
+        answers: ["thick"],
+        explanation: "Avocado juice is a thick liquid because it flows slowly."
+      },
+      {
+        text: "Some changes are permanent, and some are [blank].",
+        answers: ["temporary"],
+        explanation: "Changes can be permanent or temporary (reversible)."
+      },
+      {
+        text: "Freezing happens when the liquid [blank] heat.",
+        answers: ["loses"],
+        explanation: "A liquid loses heat to freeze into a solid."
+      },
+      {
+        text: "The melting point of an iron is [blank] °C.",
+        answers: ["1538"],
+        explanation: "Iron melts at approximately 1538°C."
+      },
+      {
+        text: "What is the name of this following picture (syringe with plunger)? [blank]",
+        answers: ["syringe"],
+        explanation: "The diagram shows a syringe."
+      },
+      {
+        text: "Paper burns to form [blank] when it is heated.",
+        answers: ["ash"],
+        explanation: "Burning paper leaves behind ash."
+      },
+      {
+        text: "Water turns into ice at very [blank] temperature.",
+        answers: ["low"],
+        explanation: "Water turns into ice when cooled to a very low temperature."
+      },
+      {
+        text: "Look at the Milk Carton (946 ml). 946 ml is the [blank] of the milk.",
+        answers: ["volume"],
+        explanation: "Milliliters (ml) measure volume."
+      },
+      {
+        text: "Anything that has mass and occupies space is [blank].",
+        answers: ["matter"],
+        explanation: "Matter is anything that has mass and occupies space."
+      },
+      {
+        text: "What is the name of this following picture (beaker)? [blank]",
+        answers: ["beaker"],
+        explanation: "The picture shows a laboratory beaker."
+      },
+      {
+        text: "[blank] is the process of changing a solid into a liquid.",
+        answers: ["melting"],
+        explanation: "Melting is changing a solid into a liquid."
+      },
+      {
+        text: "Mass can be measured in [blank] and [blank].",
+        answers: ["grams", "kilograms"],
+        explanation: "Mass is commonly measured in grams (g) and kilograms (kg)."
+      },
+      {
+        text: "Choices: Oil, Ice, Milk, Glue. Which one is a thin liquid? [blank]",
+        answers: ["milk"],
+        explanation: "Milk is a thin liquid that flows easily."
+      },
+      {
+        text: "Statements: i. A pencil cannot flow. ii. Milk doesn't have a definite shape. iii. Oil doesn't take the shape of the container. iv. Water can flow. Which of these is wrong? [blank]",
+        answers: ["iii"],
+        explanation: "Statement iii is wrong because a liquid like oil takes the shape of its container."
+      },
+      {
+        text: "Choices: Shampoo, Table, Ice, Rock. Which of these is not solid? [blank]",
+        answers: ["shampoo"],
+        explanation: "Shampoo is a liquid, not a solid."
+      },
+      {
+        text: "We read the volume at the [blank] of meniscus.",
+        answers: ["bottom"],
+        explanation: "Read the volume at the bottom of the meniscus at eye level."
+      },
+      {
+        text: "Mention 3 properties of gases: [blank], [blank], [blank].",
+        answers: ["no definite shape", "no definite volume", "can be compressed"],
+        explanation: "Gases have no definite shape, no definite volume, and can be compressed."
+      },
+      {
+        text: "The amount of matter in an object is [blank].",
+        answers: ["mass"],
+        explanation: "Mass is the amount of matter in an object."
+      },
+      {
+        text: "[blank] means that the material that has undergone changes can return to its original form.",
+        answers: ["reversible"],
+        explanation: "Reversible (or temporary) changes allow materials to return to their original form."
+      },
+      {
+        text: "All living things and non-living things are [blank].",
+        answers: ["matter"],
+        explanation: "Both living and non-living things are made of matter."
+      },
+      {
+        text: "The amount of space occupied by matter is [blank].",
+        answers: ["volume"],
+        explanation: "Volume is the amount of space occupied by matter."
+      },
+      {
+        text: "A [blank] mass balance is more accurate than a simple mass balance.",
+        answers: ["digital"],
+        explanation: "A digital mass balance provides more accurate mass measurements than a simple balance."
+      },
+      {
+        text: "Liquids and gases have no definite [blank].",
+        answers: ["shape"],
+        explanation: "Liquids and gases do not have a definite shape."
+      },
+      {
+        text: "Mention three examples of solids that can melt: [blank], [blank], [blank].",
+        answers: ["ice", "butter", "chocolate"],
+        explanation: "Ice, butter, and chocolate are solids that melt when heated."
+      },
+      {
+        text: "Complete the table from [shampoo, water, glue, milk, oil, orange juice]:<br>Thick liquids: [blank], [blank]<br>Thin liquids: [blank], [blank], [blank], [blank]",
+        answers: ["shampoo", "glue", "water", "milk", "oil", "orange juice"],
+        explanation: "Shampoo and glue are thick liquids; water, milk, oil, and orange juice are thin liquids."
+      },
+      {
+        text: "What does the amount of water collected in the measuring cylinder from the overflow can represent? [blank]",
+        answers: ["volume of object x"],
+        explanation: "The collected water equals the volume of Object X."
+      },
+      {
+        text: "When we fill a syringe with [blank], the plunger enters the syringe easily when we push it.",
+        answers: ["air"],
+        explanation: "Air can be compressed easily inside a syringe."
+      },
+      {
+        text: "A system of measurements used to determine the volume of an object that does not have a regular shape is [blank] method.",
+        answers: ["displacement"],
+        explanation: "The displacement method measures the volume of irregular objects."
+      },
+      {
+        text: "Some solids turn directly into gases without going through the liquid state. This process is called as [blank].",
+        answers: ["sublimation"],
+        explanation: "Sublimation is changing directly from a solid to a gas without passing through the liquid state."
+      },
+      {
+        text: "[blank] and [blank] can change the state of matter.",
+        answers: ["heating", "cooling"],
+        explanation: "Heating and cooling can change the state of matter."
+      },
+      {
+        text: "Matter can exist as [blank], [blank], or [blank].",
+        answers: ["solid", "liquid", "gas"],
+        explanation: "Matter exists as solid, liquid, or gas."
+      }
+    ];
+
+    let activeEssayQuestions = [];
+    let score = 0;
+    let checkedCount = 0;
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function updateScoreHeader() {
+      const pct = Math.round((score / activeEssayQuestions.length) * 100);
+      document.getElementById("live-score").textContent =
+        `Score: ${score} / ${activeEssayQuestions.length} (${pct}%) — Checked: ${checkedCount} / ${activeEssayQuestions.length}`;
+    }
+
+    function initEssayQuiz() {
+      const container = document.getElementById("essay-container");
+      container.innerHTML = "";
+      score = 0;
+      checkedCount = 0;
+
+      activeEssayQuestions = shuffleArray(baseEssayQuestions).map(item => ({
+        ...item,
+        locked: false
+      }));
+
+      updateScoreHeader();
+
+      activeEssayQuestions.forEach((item, qIdx) => {
+        const div = document.createElement("div");
+        div.className = "question-item";
+
+        let blankCounter = 0;
+        const formattedText = item.text.replace(/\[blank\]/g, () => {
+          const html = `<input type="text" class="blank-input" id="q${qIdx}-b${blankCounter}" placeholder="..." onkeydown="if(event.key==='Enter'){checkSingleQuestion(${qIdx});}" />`;
+          blankCounter++;
+          return html;
+        });
+
+        div.innerHTML = `
+          <div><strong>${qIdx + 1}.</strong> ${formattedText}</div>
+          <button type="button" class="btn-check-single" id="btn-check-${qIdx}" onclick="checkSingleQuestion(${qIdx})">Check & Lock Answer</button>
+          <div class="answer-key" id="ans-${qIdx}"></div>
+        `;
+        container.appendChild(div);
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function checkSingleQuestion(qIdx) {
+      const item = activeEssayQuestions[qIdx];
+      if (item.locked) return; // Cannot repair once checked
+
+      item.locked = true;
+      checkedCount++;
+
+      const btn = document.getElementById(`btn-check-${qIdx}`);
+      btn.disabled = true;
+      btn.textContent = "Locked";
+
+      let allCorrectForQuestion = true;
+
+      item.answers.forEach((expectedAns, bIdx) => {
+        const inputEl = document.getElementById(`q${qIdx}-b${bIdx}`);
+        const userVal = inputEl.value.trim().toLowerCase();
+        const targetVal = expectedAns.toLowerCase();
+
+        // Lock the input so student cannot edit/repair it
+        inputEl.disabled = true;
+
+        if (userVal !== "" && (userVal === targetVal || (targetVal.length > 5 && targetVal.includes(userVal) && userVal.length >= 2))) {
+          inputEl.classList.add("input-correct");
+        } else {
+          allCorrectForQuestion = false;
+          inputEl.classList.add("input-wrong");
+        }
+      });
+
+      const keyBox = document.getElementById(`ans-${qIdx}`);
+      keyBox.style.display = "block";
+      const formattedAnswers = item.answers.map(a => `<u>${a}</u>`).join(" | ");
+
+      if (allCorrectForQuestion) {
+        score++;
+        keyBox.className = "answer-key key-correct";
+        keyBox.innerHTML = `
+          <strong>✔ Correct! (+1 Point)</strong><br>
+          <strong>Underlined Answer(s):</strong> ${formattedAnswers}<br>
+          <strong>Explanation:</strong> ${item.explanation}
+        `;
+      } else {
+        keyBox.className = "answer-key key-correction";
+        keyBox.innerHTML = `
+          <strong>✘ Incorrect (Answer Locked — Cannot Be Repaired)</strong><br>
+          <strong>Correction (Underlined Answer):</strong> ${formattedAnswers}<br>
+          <strong>Explanation:</strong> ${item.explanation}
+        `;
+      }
+
+      updateScoreHeader();
+    }
+
+    initEssayQuiz();
+  </script>
+</body>
+</html>
